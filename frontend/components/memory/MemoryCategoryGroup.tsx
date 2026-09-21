@@ -1,0 +1,65 @@
+'use client'
+
+import { useId, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { Badge } from '@/components/ui/Badge'
+import { MemoryFactCard } from '@/components/memory/MemoryFactCard'
+import { cn } from '@/lib/utils/cn'
+import { formatCount } from '@/lib/utils/format'
+import type { MemoryFact } from '@/lib/schemas'
+
+interface MemoryCategoryGroupProps {
+  /** Display name for the category, e.g. `Dealbreakers`. */
+  label: string
+  facts: MemoryFact[]
+  className?: string
+}
+
+/**
+ * A collapsible category.
+ *
+ * The open/closed flag is genuinely view state — it belongs in local `useState`, not in
+ * the URL and not in SWR. The toggle is a real `<button>` with `aria-expanded`; a
+ * clickable `<div>` would be invisible to the Phase 4 harness.
+ */
+export function MemoryCategoryGroup({ label, facts, className }: MemoryCategoryGroupProps) {
+  const [isOpen, setIsOpen] = useState(true)
+  const contentId = useId()
+
+  return (
+    <section className={cn('flex flex-col gap-2', className)}>
+      <button
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        className={cn(
+          'flex w-full items-center justify-between gap-2 rounded-md px-1 py-1',
+          'duration-fast hover:bg-surface-1 transition-colors',
+        )}
+      >
+        <span className="flex items-center gap-2">
+          <ChevronDown
+            size={16}
+            strokeWidth={1.75}
+            aria-hidden="true"
+            className={cn(
+              'text-muted duration-fast transition-transform',
+              isOpen ? 'rotate-0' : '-rotate-90',
+            )}
+          />
+          <span className="text-eyebrow text-muted font-mono tracking-[0.08em] uppercase">
+            {label}
+          </span>
+        </span>
+        <Badge>{formatCount(facts.length)}</Badge>
+      </button>
+
+      <div id={contentId} hidden={!isOpen} className="flex flex-col gap-2">
+        {facts.map((fact) => (
+          <MemoryFactCard key={fact.id} fact={fact} />
+        ))}
+      </div>
+    </section>
+  )
+}

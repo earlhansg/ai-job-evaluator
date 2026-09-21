@@ -1,26 +1,196 @@
 @import 'tailwindcss';
 
+/* ===========================================================================
+   Stage 1 — raw values. THE ONLY PLACE A LITERAL COLOR APPEARS.
+   (design-system.md §2)
+
+   The palette is a single green-teal family, supplied by the project owner:
+
+     #092328   #12544F   #2A835F   #8BBB92
+
+   In OKLCH those four are a clean ramp that warms as it lightens — L 0.239 →
+   0.405 → 0.548 → 0.747, hue drifting 212° → 187° → 163° → 149°. All four are
+   used VERBATIM below; only the two intermediate surfaces and the text pair are
+   derived, by interpolating along that same L/C/H path so nothing sits off the
+   ramp. This replaces the zinc-neutral + teal-accent scheme, which was the
+   de-facto default for dark developer tooling and read as generic.
+
+   Two consequences of an all-green identity, both deliberate:
+
+   1. `accent` and `match` are necessarily in the same family. They are kept
+      apart by CHROMA and lightness: chrome (accent, L 0.747 C 0.078) is the
+      desaturated sage; data marks (match, L 0.80 C 0.15) are brighter and
+      vivid. "Desaturated = interface, saturated = signal" is the rule to hold
+      to when adding anything new. They are never adjacent — accent is panel
+      chrome, match is a mark inside the analysis card — and every status also
+      carries an icon and a text label, so hue is never the sole channel.
+   2. `mismatch` and `partial` stay red and amber. The supplied palette has no
+      warm end, and recolouring a failed criterion green would destroy the one
+      distinction the analysis card exists to make. Their hues are unchanged;
+      their lightness is raised to clear 4.5:1 on the lighter new surfaces.
+
+   `--c-track` is the fourth supplied colour, #2A835F. It is a mid-tone, which
+   makes it low-contrast against BOTH ends of the ramp — 2.5:1 on surface-2 and
+   2.1:1 against the accent — so it is never used where 1.4.11's 3:1 applies. It
+   is the recessive outline, used only where nothing has to be read off it: the
+   scrollbar thumb (3.5:1 on bg), the hover border on an interactive row, and
+   the rail behind the session sparkbar — which is `aria-hidden` decoration
+   whose value is printed as text beside it. A meter that carries meaning uses a
+   `surface-2` track with an accent fill (5.3:1), and an empty confidence dot is
+   a 70%-accent ring (3.9:1), because `track` measures only 2.5–3.0:1 against
+   the surfaces and would fail 1.4.11.
+
+   Authored in OKLCH so a future light theme redefines only this block and the
+   whole ramp lightens without the muddy mid-tones HSL produces:
+     :root[data-theme="light"] { --c-bg: oklch(0.99 0.004 200); … }
+
+   Every pair below was checked against WCAG 2.2 (see the table in
+   design-system.md §2) and every value round-trips inside sRGB without gamut
+   clipping. Do not nudge a lightness without re-running that check.
+   =========================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --c-bg: oklch(0.239 0.033 212.3); /* #092328 — supplied */
+  --c-surface-1: oklch(0.288 0.04 205); /* #0d3134 — derived */
+  --c-surface-2: oklch(0.338 0.048 197); /* #123f40 — derived */
+  --c-border: oklch(0.405 0.064 187.4); /* #12544f — supplied */
+  --c-track: oklch(0.548 0.102 162.5); /* #2a835f — supplied */
+  --c-text: oklch(0.965 0.01 170); /* #edf6f2 — derived */
+  --c-text-muted: oklch(0.77 0.022 190); /* #a5b9b7 — derived */
+  --c-accent: oklch(0.747 0.078 148.7); /* #8bbb92 — supplied */
+  --c-match: oklch(0.8 0.15 158); /* #58da98 */
+  --c-mismatch: oklch(0.75 0.14 22); /* #fa8785 */
+  --c-partial: oklch(0.855 0.14 85); /* #f9c857 */
+
+  /* Motion. Not a Tailwind theme namespace — see the @utility block below. */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
+
+  /* Dark-only this phase. Without this, native scrollbars, date pickers and
+     form controls render light and break the surface ladder. */
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+/* ===========================================================================
+   Stage 2 — semantic names Tailwind turns into utilities.
+
+   Deliberately NOT `@theme inline`: inline resolves var() at build time, which
+   would bake stage 1's values into every utility and break theme switching.
+
+   `static` is load-bearing and is NOT the same knob. By default Tailwind v4
+   tree-shakes `@theme`, emitting only the variables some generated utility
+   happens to reference — verified in the browser: with no components built yet,
+   `--color-surface-1`, `--color-match` and every `--text-*` resolved to the
+   empty string. That silently breaks any consumer that reads a token from raw
+   CSS rather than a utility class: @keyframes, the chart palette slots in
+   dataviz.md §8, and `color-mix()` below. `static` emits the full set and keeps
+   the var() indirection, so the token contract is complete from day one.
+   =========================================================================== */
+@theme static {
+  --color-bg: var(--c-bg);
+  --color-surface-1: var(--c-surface-1);
+  --color-surface-2: var(--c-surface-2);
+  --color-border: var(--c-border);
+  /* The unfilled half of a measurement — bar tracks, empty confidence dots,
+     the session sparkbar's rail. Not a surface: it never holds text. */
+  --color-track: var(--c-track);
+  --color-text: var(--c-text);
+  --color-muted: var(--c-text-muted);
+  --color-accent: var(--c-accent);
+  --color-match: var(--c-match);
+  --color-mismatch: var(--c-mismatch);
+  --color-partial: var(--c-partial);
+
+  /* Geist Sans + Geist Mono, loaded and self-hosted by next/font in
+     app/layout.tsx. Mono is load-bearing: scores, token counts, fact IDs and
+     every eyebrow label. It is the single strongest signal that this is an
+     analysis tool rather than a chat product. */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* The type ramp. Six roles, fixed — see design-system.md §4. Defining these
+     is what makes `text-[13px]` unnecessary rather than merely discouraged. */
+  --text-eyebrow: 0.6875rem; /* 11px */
+  --text-eyebrow--line-height: 1;
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-body: 0.9375rem; /* 15px */
+  --text-body--line-height: 1.6;
+  --text-title: 1rem; /* 16px */
+  --text-title--line-height: 1.4;
+  --text-display: 1.5rem; /* 24px */
+  --text-display--line-height: 1.2;
+  --text-metric: 1.75rem; /* 28px */
+  --text-metric--line-height: 1;
+
+  /* Enter with ease-out, exit with ease-in (§8). Tailwind ships an --ease-*
+     namespace, so these override the defaults rather than adding to them. */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---------------------------------------------------------------------------
+   Named durations as real utilities.
+
+   Tailwind v4 has an --ease-* theme namespace but NO --duration-* namespace:
+   `duration-*` takes bare values (`duration-200`), so `@theme { --duration-fast }`
+   alone would define a variable that generates no class, and every
+   `duration-fast` in design-system.md §8 would silently do nothing. These three
+   static utilities make the documented names real. Three durations, no more.
+   --------------------------------------------------------------------------- */
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
+/* ===========================================================================
+   Base layer
+   =========================================================================== */
+@layer base {
+  /* The previous `font-family: Arial` on body silently overrode Geist for the
+     entire app — the fonts were loaded and then never used. Route the stack
+     through the token instead. */
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  /* Panels scroll independently, so the scrollbar sits inside the surface
+     ladder rather than on top of it. `track` is the recessive mid-tone: visible
+     enough to grab, quiet enough not to compete with content. */
+  * {
+    scrollbar-color: var(--color-track) transparent;
+    scrollbar-width: thin;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 30%, transparent);
+  }
+
+  /* Never removed. A missing focus ring is a defect, and agent-browser drives
+     this app from the keyboard. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Motion here is feedback, never decoration — so suppressing it costs nothing.
+   The "saved to memory" badge stays visible with motion reduced: its reveal is
+   a one-shot animation on an element that then persists. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
