@@ -1,0 +1,612 @@
+{
+  "s_onsite_rejects": [
+    {
+      "id": "m_001",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "Here's the first one I want your read on.\n\nSenior Frontend Engineer — Kastell GmbH, Berlin Mitte.\n\nAbout the role: you'll own the customer-facing web surface end to end, working alongside two backend engineers and a designer. Requirements: 5+ years with React, strong TypeScript, comfort with design systems, and a track record of shipping. We work from our Mitte office four days a week; Fridays are flexible. Compensation is competitive and reviewed annually.",
+      "createdAt": "2026-09-14T09:12:00.000Z",
+      "tokenEstimate": 180
+    },
+    {
+      "id": "m_002",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "analysis",
+      "content": "Evaluated Kastell GmbH against your saved preferences.",
+      "createdAt": "2026-09-14T09:13:00.000Z",
+      "tokenEstimate": 150,
+      "analysis": {
+        "jobTitle": "Senior Frontend Engineer",
+        "company": "Kastell GmbH",
+        "location": "Berlin Mitte, Germany",
+        "workMode": "onsite",
+        "matchScore": 41,
+        "verdict": "not-recommended",
+        "criteria": [
+          {
+            "id": "c_k_role",
+            "label": "Senior IC frontend role",
+            "detail": "Ownership of the customer-facing surface, no reports",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_role_senior_fe"
+          },
+          {
+            "id": "c_k_ts",
+            "label": "TypeScript",
+            "detail": "Listed as a strong requirement",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_stack_ts"
+          },
+          {
+            "id": "c_k_react",
+            "label": "React",
+            "detail": "5+ years required",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_stack_react"
+          },
+          {
+            "id": "c_k_team",
+            "label": "Small product team",
+            "detail": "Four people on the surface, well under your twelve",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_pref_small_team"
+          },
+          {
+            "id": "c_k_onsite",
+            "label": "Four office days per week",
+            "detail": "You cap office attendance at one day per month",
+            "weight": "must-have",
+            "status": "mismatch",
+            "sourceFactId": "f_no_onsite"
+          },
+          {
+            "id": "c_k_comp",
+            "label": "No published band",
+            "detail": "\"Competitive\" gives nothing to check against your floor",
+            "weight": "must-have",
+            "status": "partial",
+            "sourceFactId": "f_comp_floor"
+          }
+        ],
+        "rationale": "Strong on craft and team shape, but four office days a week is a direct conflict with the onsite dealbreaker you've saved, and that is a must-have. Nothing in the rest of the posting outweighs it.",
+        "memoryCitations": [
+          {
+            "factId": "f_no_onsite",
+            "label": "Avoids onsite roles",
+            "value": "Will not accept more than one office day per month"
+          },
+          {
+            "factId": "f_role_senior_fe",
+            "label": "Target role",
+            "value": "Senior Frontend Engineer, individual contributor track"
+          }
+        ]
+      }
+    },
+    {
+      "id": "m_003",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "Second one, similar space.\n\nFrontend Engineer (Senior) — Nordwand Systems, Berlin Kreuzberg.\n\nAbout the role: join a ten-person product group building logistics tooling. Requirements: deep React and TypeScript, an eye for interface detail, and experience with component libraries. Responsibilities include mentoring two mid-level engineers. Hybrid working: four days in Kreuzberg, one day remote. Salary band is not published at this stage.",
+      "createdAt": "2026-09-14T09:20:00.000Z",
+      "tokenEstimate": 165
+    },
+    {
+      "id": "m_004",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "analysis",
+      "content": "Evaluated Nordwand Systems against your saved preferences.",
+      "createdAt": "2026-09-14T09:21:00.000Z",
+      "tokenEstimate": 140,
+      "analysis": {
+        "jobTitle": "Frontend Engineer (Senior)",
+        "company": "Nordwand Systems",
+        "location": "Berlin Kreuzberg, Germany",
+        "workMode": "hybrid",
+        "matchScore": 44,
+        "verdict": "not-recommended",
+        "criteria": [
+          {
+            "id": "c_n_role",
+            "label": "Senior IC frontend role",
+            "detail": "Senior title with mentoring, no line management",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_role_senior_fe"
+          },
+          {
+            "id": "c_n_ts",
+            "label": "TypeScript",
+            "detail": "\"Deep\" TypeScript named explicitly",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_stack_ts"
+          },
+          {
+            "id": "c_n_location",
+            "label": "Berlin-based",
+            "detail": "Kreuzberg, same city",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_loc_berlin"
+          },
+          {
+            "id": "c_n_team",
+            "label": "Ten-person product group",
+            "detail": "Just inside your under-twelve preference",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_pref_small_team"
+          },
+          {
+            "id": "c_n_onsite",
+            "label": "Four days in office, labelled hybrid",
+            "detail": "Hybrid in name only — still four office days",
+            "weight": "must-have",
+            "status": "mismatch",
+            "sourceFactId": "f_no_onsite"
+          },
+          {
+            "id": "c_n_comp",
+            "label": "Band withheld",
+            "detail": "Cannot be checked against your €95,000 floor",
+            "weight": "must-have",
+            "status": "partial",
+            "sourceFactId": "f_comp_floor"
+          }
+        ],
+        "rationale": "Reads as the same shape as Kastell: the craft requirements line up, the team size suits you, and the working pattern does not. Four office days labelled hybrid is still four office days.",
+        "memoryCitations": [
+          {
+            "factId": "f_no_onsite",
+            "label": "Avoids onsite roles",
+            "value": "Will not accept more than one office day per month"
+          },
+          {
+            "factId": "f_loc_berlin",
+            "label": "Base location",
+            "value": "Berlin, CET±2 for overlap"
+          }
+        ]
+      }
+    },
+    {
+      "id": "m_005",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "That's a fair read on both. The frustrating part is that the work itself is close to what I want in each case — small product group, real ownership of the surface, TypeScript throughout. It's only the office pattern that rules them out, and both postings bury it near the bottom.",
+      "createdAt": "2026-09-14T09:40:00.000Z",
+      "tokenEstimate": 155
+    },
+    {
+      "id": "m_006",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "text",
+      "content": "That pattern is worth naming: both postings lead with autonomy and craft and defer the attendance requirement to the last line. I'll keep surfacing the working pattern in the first two criteria from now on so it never reads as a footnote in an evaluation.",
+      "createdAt": "2026-09-14T09:42:00.000Z",
+      "tokenEstimate": 145
+    },
+    {
+      "id": "m_007",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "Please do. And while we're here — I'd rather not look at agencies or consultancies at all. I've done two years of that and the work is always someone else's roadmap. Product companies where the engineers are close to the customer is what I'm after, even if the brand is smaller.",
+      "createdAt": "2026-09-14T09:55:00.000Z",
+      "tokenEstimate": 170
+    },
+    {
+      "id": "m_008",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Noted as a preference rather than a dealbreaker, since you framed it as \"rather not\" — I'll weight agency and consultancy postings down but still show them if everything else is unusually strong. If you'd prefer them filtered out entirely, say so and I'll move it up to a must-have.",
+      "createdAt": "2026-09-14T09:57:00.000Z",
+      "tokenEstimate": 160
+    },
+    {
+      "id": "m_009",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "Preference is right for now. One more thing on the office question — I'm not against meeting people. A quarterly offsite or an occasional team week is fine and I'd probably enjoy it. What I can't do is a standing weekly commute. So the rule is about recurring attendance, not about ever being in a room together.",
+      "createdAt": "2026-09-14T10:00:00.000Z",
+      "tokenEstimate": 175
+    },
+    {
+      "id": "m_010",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "text",
+      "content": "That's a useful distinction and I've recorded it that way: the constraint is on recurring attendance, not on travel. A role advertising a quarterly gathering won't be flagged; one advertising \"two days a week in office\" will be, regardless of how it is labelled.",
+      "createdAt": "2026-09-14T10:01:00.000Z",
+      "tokenEstimate": 155
+    },
+    {
+      "id": "m_011",
+      "sessionId": "s_onsite_rejects",
+      "role": "user",
+      "kind": "text",
+      "content": "Both of those are onsite 4 days, so I've ruled them out — let's not look at anything that needs more than one office day a month.",
+      "createdAt": "2026-09-19T08:38:00.000Z",
+      "tokenEstimate": 130,
+      "memoryEffects": [
+        {
+          "factId": "f_no_onsite",
+          "action": "reinforced",
+          "label": "Saved to memory — Avoids onsite roles"
+        }
+      ]
+    },
+    {
+      "id": "m_012",
+      "sessionId": "s_onsite_rejects",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Understood — one office day a month is now the hard ceiling. Paste the next description whenever you're ready and I'll check it against that first.",
+      "createdAt": "2026-09-19T08:40:00.000Z",
+      "tokenEstimate": 122
+    }
+  ],
+  "s_platform_eng": [
+    {
+      "id": "m_pe_001",
+      "sessionId": "s_platform_eng",
+      "role": "user",
+      "kind": "text",
+      "content": "Different shape this time — platform rather than product.\n\nStaff Platform Engineer — Vireo Labs, remote within the EU.\n\nAbout the role: you will own the internal developer platform used by roughly ninety engineers. Requirements: deep Node and TypeScript, Next.js at scale, build tooling, observability, and a bias toward paved roads over gatekeeping. Responsibilities include the component library, the CI pipeline, release tooling, and a shared on-call rotation with the infrastructure group. Fully remote across the EU. Band: €98,000–€118,000 plus equity.",
+      "createdAt": "2026-09-16T10:04:00.000Z",
+      "tokenEstimate": 210
+    },
+    {
+      "id": "m_pe_002",
+      "sessionId": "s_platform_eng",
+      "role": "assistant",
+      "kind": "analysis",
+      "content": "Evaluated Vireo Labs against your saved preferences.",
+      "createdAt": "2026-09-16T10:06:00.000Z",
+      "tokenEstimate": 180,
+      "analysis": {
+        "jobTitle": "Staff Platform Engineer",
+        "company": "Vireo Labs",
+        "location": "Remote — European Union",
+        "workMode": "remote",
+        "compensation": "€98,000–€118,000 + equity",
+        "matchScore": 71,
+        "verdict": "partial-match",
+        "criteria": [
+          {
+            "id": "c_v_remote",
+            "label": "Fully remote across the EU",
+            "detail": "No recurring office attendance of any kind",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_no_onsite"
+          },
+          {
+            "id": "c_v_comp",
+            "label": "Band opens at €98,000",
+            "detail": "Clears your €95,000 floor at the bottom of the range",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_comp_floor"
+          },
+          {
+            "id": "c_v_ts",
+            "label": "TypeScript",
+            "detail": "Named as a depth requirement",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_stack_ts"
+          },
+          {
+            "id": "c_v_next",
+            "label": "Next.js at scale",
+            "detail": "Directly matches three shipped products",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_stack_next"
+          },
+          {
+            "id": "c_v_react",
+            "label": "React component library ownership",
+            "detail": "The shared library sits in this role's remit",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_stack_react"
+          },
+          {
+            "id": "c_v_location",
+            "label": "EU timezone overlap",
+            "detail": "Berlin sits inside the stated coverage",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_loc_berlin"
+          },
+          {
+            "id": "c_v_product_led",
+            "label": "Product-led company",
+            "detail": "Vireo sells its own product; the platform serves internal teams",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_pref_product_led"
+          },
+          {
+            "id": "c_v_paved_roads",
+            "label": "Paved roads over gatekeeping",
+            "detail": "",
+            "weight": "nice-to-have",
+            "status": "match"
+          },
+          {
+            "id": "c_v_equity",
+            "label": "Equity component",
+            "weight": "nice-to-have",
+            "status": "match"
+          },
+          {
+            "id": "c_v_a11y",
+            "label": "Accessibility ownership",
+            "detail": "Not mentioned; component library ownership usually implies it",
+            "weight": "nice-to-have",
+            "status": "partial",
+            "sourceFactId": "f_skill_a11y"
+          },
+          {
+            "id": "c_v_async",
+            "label": "Async-first culture",
+            "detail": "Remote-first, but the posting says nothing about meeting load",
+            "weight": "nice-to-have",
+            "status": "partial",
+            "sourceFactId": "f_pref_async"
+          },
+          {
+            "id": "c_v_role_track",
+            "label": "Staff title on a platform team rather than the senior individual-contributor product track you named, which may mean less direct customer contact and more internal stakeholder management than the role shape you described wanting earlier in this thread",
+            "detail": "Title is a step up; the surface you work on is a step away from the customer",
+            "weight": "must-have",
+            "status": "partial",
+            "sourceFactId": "f_role_senior_fe"
+          },
+          {
+            "id": "c_v_team_size",
+            "label": "Platform serving ninety engineers",
+            "detail": "The platform group itself is unstated; the blast radius is not small",
+            "weight": "nice-to-have",
+            "status": "partial",
+            "sourceFactId": "f_pref_small_team"
+          },
+          {
+            "id": "c_v_oncall",
+            "label": "Shared on-call rotation",
+            "detail": "Paging outside business hours is a saved dealbreaker",
+            "weight": "must-have",
+            "status": "mismatch",
+            "sourceFactId": "f_no_oncall"
+          },
+          {
+            "id": "c_v_customer_contact",
+            "label": "Distance from the customer",
+            "detail": "Internal platform work, no end-user surface",
+            "weight": "nice-to-have",
+            "status": "mismatch",
+            "sourceFactId": "f_pref_product_led"
+          }
+        ],
+        "rationale": "The best working pattern and compensation you've seen so far, and the stack is a direct hit. It stops short of a recommendation on one saved dealbreaker: the shared on-call rotation. Worth asking whether platform engineers can opt out before ruling it out.",
+        "memoryCitations": [
+          {
+            "factId": "f_no_oncall",
+            "label": "No production on-call",
+            "value": "Declines roles with a paging rotation outside business hours"
+          },
+          {
+            "factId": "f_comp_floor",
+            "label": "Compensation floor",
+            "value": "€95,000 base, excluding equity"
+          },
+          {
+            "factId": "f_stack_next",
+            "label": "Next.js",
+            "value": "App Router, route handlers, streaming — shipped three products on it"
+          }
+        ]
+      }
+    },
+    {
+      "id": "m_pe_003",
+      "sessionId": "s_platform_eng",
+      "role": "user",
+      "kind": "text",
+      "content": "The on-call line is the sticking point, yes. Worth adding that I've led an accessibility remediation programme across a component library — WCAG 2.2 AA — so platform work of that kind isn't unfamiliar. It just can't come with a pager.",
+      "createdAt": "2026-09-16T10:22:00.000Z",
+      "tokenEstimate": 120
+    },
+    {
+      "id": "m_pe_004",
+      "sessionId": "s_platform_eng",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Recorded the accessibility programme as a skill. On the rotation: some platform groups run business-hours-only support with infrastructure taking the overnight pages. That is a reasonable thing to ask in a first conversation rather than screening the role out on the posting alone.",
+      "createdAt": "2026-09-16T10:24:00.000Z",
+      "tokenEstimate": 140
+    },
+    {
+      "id": "m_pe_005",
+      "sessionId": "s_platform_eng",
+      "role": "user",
+      "kind": "text",
+      "content": "Agreed. One more preference while I think of it: async-first written culture, with meetings clustered into a couple of days rather than scattered across the week.",
+      "createdAt": "2026-09-16T10:48:00.000Z",
+      "tokenEstimate": 95
+    },
+    {
+      "id": "m_pe_006",
+      "sessionId": "s_platform_eng",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Saved as a preference. It's rarely stated outright in a posting, so I'll infer it from signals — a public handbook, written RFCs, published timezone spread — and mark it partial rather than matched when the evidence is thin, as it was here.",
+      "createdAt": "2026-09-16T10:50:00.000Z",
+      "tokenEstimate": 130
+    },
+    {
+      "id": "m_pe_007",
+      "sessionId": "s_platform_eng",
+      "role": "user",
+      "kind": "text",
+      "content": "That's the right call. Make the on-call point a hard one though — no paging rotation outside business hours, full stop. I've done three years of it and I'm not going back.",
+      "createdAt": "2026-09-16T11:02:00.000Z",
+      "tokenEstimate": 110,
+      "memoryEffects": [
+        {
+          "factId": "f_no_oncall",
+          "action": "created",
+          "label": "Saved to memory — No production on-call"
+        }
+      ]
+    },
+    {
+      "id": "m_pe_008",
+      "sessionId": "s_platform_eng",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Stored as a dealbreaker alongside the onsite rule. Vireo now reads as not-recommended unless they confirm platform engineers sit outside the paging rotation.",
+      "createdAt": "2026-09-18T16:05:00.000Z",
+      "tokenEstimate": 125
+    }
+  ],
+  "s_comp_check": [
+    {
+      "id": "m_cc_001",
+      "sessionId": "s_comp_check",
+      "role": "user",
+      "kind": "text",
+      "content": "Before we go further on any of these — my floor is €95,000 base, excluding equity. Below that the maths doesn't work regardless of how good the role is.\n\nHere's one to check against it.\n\nSenior Product Engineer — Halden, remote (Germany). About the role: own a customer-facing billing surface. Requirements: TypeScript, React, comfort with ambiguity. Responsibilities span discovery through delivery.",
+      "createdAt": "2026-09-15T13:40:00.000Z",
+      "tokenEstimate": 160
+    },
+    {
+      "id": "m_cc_002",
+      "sessionId": "s_comp_check",
+      "role": "assistant",
+      "kind": "analysis",
+      "content": "Evaluated Halden against your saved preferences.",
+      "createdAt": "2026-09-15T13:44:00.000Z",
+      "tokenEstimate": 150,
+      "analysis": {
+        "jobTitle": "Senior Product Engineer",
+        "company": "Halden",
+        "location": "Remote — Germany",
+        "workMode": "remote",
+        "matchScore": 68,
+        "verdict": "partial-match",
+        "criteria": [
+          {
+            "id": "c_h_remote",
+            "label": "Remote within Germany",
+            "detail": "No office attendance stated",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_no_onsite"
+          },
+          {
+            "id": "c_h_role",
+            "label": "Senior IC product role",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_role_senior_fe"
+          },
+          {
+            "id": "c_h_ts",
+            "label": "TypeScript",
+            "detail": "",
+            "weight": "must-have",
+            "status": "match",
+            "sourceFactId": "f_stack_ts"
+          },
+          {
+            "id": "c_h_customer",
+            "label": "Customer-facing surface",
+            "detail": "Billing, discovery through delivery",
+            "weight": "nice-to-have",
+            "status": "match",
+            "sourceFactId": "f_pref_product_led"
+          },
+          {
+            "id": "c_h_comp",
+            "label": "No compensation band published",
+            "detail": "",
+            "weight": "must-have",
+            "status": "partial",
+            "sourceFactId": "f_comp_floor"
+          }
+        ],
+        "rationale": "Everything checkable lines up. The posting publishes no band, so the one criterion that could rule it out is the one it stays silent on — ask for the range before investing time.",
+        "memoryCitations": [
+          {
+            "factId": "f_comp_floor",
+            "label": "Compensation floor",
+            "value": "€95,000 base, excluding equity"
+          }
+        ]
+      }
+    },
+    {
+      "id": "m_cc_003",
+      "sessionId": "s_comp_check",
+      "role": "user",
+      "kind": "text",
+      "content": "How often are you seeing bands published at all? It feels like about half the postings withhold them.",
+      "createdAt": "2026-09-15T13:50:00.000Z",
+      "tokenEstimate": 90
+    },
+    {
+      "id": "m_cc_004",
+      "sessionId": "s_comp_check",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Of the four roles in your sessions so far, one published a band. I mark a withheld band partial rather than mismatched — it isn't evidence against the role, only an absence of evidence for it.",
+      "createdAt": "2026-09-15T13:52:00.000Z",
+      "tokenEstimate": 110
+    },
+    {
+      "id": "m_cc_005",
+      "sessionId": "s_comp_check",
+      "role": "user",
+      "kind": "text",
+      "content": "That's the right treatment. Keep the floor pinned so it shows at the top of memory.",
+      "createdAt": "2026-09-16T11:18:00.000Z",
+      "tokenEstimate": 70
+    },
+    {
+      "id": "m_cc_006",
+      "sessionId": "s_comp_check",
+      "role": "assistant",
+      "kind": "text",
+      "content": "Pinned. The €95,000 floor will now lead the compensation group in long-term memory and be cited in every evaluation that touches pay.",
+      "createdAt": "2026-09-16T11:20:00.000Z",
+      "tokenEstimate": 100
+    }
+  ],
+  "s_first_look": [
+    {
+      "id": "m_fl_001",
+      "sessionId": "s_first_look",
+      "role": "user",
+      "kind": "text",
+      "content": "Starting a new thread for the design systems opening — I'll paste the description once the recruiter sends the full version.",
+      "createdAt": "2026-09-12T14:02:00.000Z",
+      "tokenEstimate": 85
+    }
+  ]
+}

@@ -1,8 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+#
+# This repo is split by tier: `frontend/` today, `backend/` later. Patterns below are
+# deliberately NOT anchored to the repo root, so they apply inside every tier.
 
 # dependencies
-/node_modules
-/.pnp
+node_modules
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -11,14 +14,14 @@
 !.yarn/versions
 
 # testing
-/coverage
+coverage
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -35,7 +38,9 @@ yarn-error.log*
 !.env.example
 
 # E2E screenshots
-tests/e2e/screenshots/
+# A pattern containing a slash is anchored to this file's directory, so it needs the
+# `**/` prefix to reach inside frontend/ (and, later, backend/).
+**/tests/e2e/screenshots/
 
 # vercel
 .vercel
@@ -52,3 +57,5 @@ e2e-screenshots
 CLAUDE.md
 frontend/CLAUDE.md
 frontend/AGENTS.md
+backend/CLAUDE.md
+backend/AGENTS.md

@@ -1,0 +1,31 @@
+{
+  "_comment": "MOCK summary text, keyed by the exact overflow set it covers. `authored` entries are matched by comparing sorted coversMessageIds; an unmatched lookup falls back to the generic line in lib/memory/token-budget.ts, so free-form input can never render an empty compaction row. Sessions ship with NO pre-baked summary — s_onsite_rejects must show none at load (E2E check AB-05 asserts this), and the first [Earlier: …] entry materializes live during the demo.",
+  "seeded": {
+    "s_onsite_rejects": [],
+    "s_platform_eng": [],
+    "s_comp_check": [],
+    "s_first_look": []
+  },
+  "authored": [
+    {
+      "sessionId": "s_onsite_rejects",
+      "coversMessageIds": ["m_001", "m_002", "m_003", "m_004"],
+      "text": "[Earlier: user shared 2 job descriptions, both rejected for onsite requirement]"
+    },
+    {
+      "sessionId": "s_onsite_rejects",
+      "coversMessageIds": ["m_001", "m_002", "m_003", "m_004", "m_005", "m_006"],
+      "text": "[Earlier: user shared 2 job descriptions, both rejected for onsite requirement, and noted that postings bury the office pattern]"
+    },
+    {
+      "sessionId": "s_platform_eng",
+      "coversMessageIds": ["m_pe_001", "m_pe_002"],
+      "text": "[Earlier: user shared a remote EU platform role that matched on pay and stack but carried a shared on-call rotation]"
+    },
+    {
+      "sessionId": "s_comp_check",
+      "coversMessageIds": ["m_cc_001", "m_cc_002"],
+      "text": "[Earlier: user set a €95,000 base floor and shared a remote role that published no band]"
+    }
+  ]
+}

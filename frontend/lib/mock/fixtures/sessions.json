@@ -1,0 +1,50 @@
+[
+  {
+    "id": "s_onsite_rejects",
+    "userId": "u_demo",
+    "title": "Senior FE roles — Berlin",
+    "preview": "Both of those are onsite 4 days, so I've ruled them out…",
+    "messageCount": 12,
+    "evaluationCount": 2,
+    "tokensUsed": 1847,
+    "createdAt": "2026-09-14T09:12:00.000Z",
+    "updatedAt": "2026-09-19T08:40:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "s_platform_eng",
+    "userId": "u_demo",
+    "title": "Platform engineering — remote EU",
+    "preview": "That one scores well on autonomy but the on-call rotation is a problem…",
+    "messageCount": 8,
+    "evaluationCount": 1,
+    "tokensUsed": 1110,
+    "createdAt": "2026-09-16T10:04:00.000Z",
+    "updatedAt": "2026-09-18T16:05:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "s_comp_check",
+    "userId": "u_demo",
+    "title": "Compensation calibration",
+    "preview": "No band published, so I can't tell whether it clears your floor.",
+    "messageCount": 6,
+    "evaluationCount": 1,
+    "tokensUsed": 680,
+    "createdAt": "2026-09-15T13:40:00.000Z",
+    "updatedAt": "2026-09-16T11:20:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "s_first_look",
+    "userId": "u_demo",
+    "title": "First look — design systems role",
+    "preview": "Starting a new thread for the design systems opening.",
+    "messageCount": 1,
+    "evaluationCount": 0,
+    "tokensUsed": 85,
+    "createdAt": "2026-09-12T14:02:00.000Z",
+    "updatedAt": "2026-09-12T14:02:00.000Z",
+    "status": "active"
+  }
+]
