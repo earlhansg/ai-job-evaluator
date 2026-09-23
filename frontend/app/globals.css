@@ -127,6 +127,60 @@
      namespace, so these override the defaults rather than adding to them. */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Keyframe animations. Unlike --duration-*, --animate-* IS a Tailwind v4 theme
+     namespace, so each line below generates an `animate-*` utility. Every keyframe
+     animates opacity/transform only (§8).
+     - memory-rise: the saved-to-memory badge's one-shot reveal. `both` fill means it
+       ends visible even under the reduced-motion override below.
+     - toast-in: a toast entering the stack.
+     - typing-dot: the one sanctioned loop — the "Evaluating…" indicator.
+     - fact-flash: PRD §7.4's 2s highlight on a Panel 3 fact. A hold-then-fade on a
+       ring overlay, not a fourth transition duration (a documented deviation). */
+  --animate-memory-rise: memory-rise var(--duration-slow) var(--ease-out) both;
+  --animate-toast-in: toast-in var(--duration-base) var(--ease-out) both;
+  --animate-typing-dot: typing-dot 1.2s ease-in-out infinite;
+  --animate-fact-flash: fact-flash 2s var(--ease-out) both;
+
+  @keyframes memory-rise {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes typing-dot {
+    0%,
+    80%,
+    100% {
+      opacity: 0.3;
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+  @keyframes fact-flash {
+    0%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }
 
 /* ---------------------------------------------------------------------------

@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { AnalysisCard } from '@/components/analysis/AnalysisCard'
+import { MemorySavedBadge } from '@/components/chat/MemorySavedBadge'
 import { MessageBubble } from '@/components/chat/MessageBubble'
 import { SummarizedContextEntry } from '@/components/chat/SummarizedContextEntry'
+import { TypingIndicator } from '@/components/chat/TypingIndicator'
 import { cn } from '@/lib/utils/cn'
 import type { ChatMessage, SessionMemoryState } from '@/lib/schemas'
 
@@ -16,6 +18,8 @@ interface MessageListProps {
   sessionMemory: SessionMemoryState
   /** The panel's scroll container, owned by `ActiveChatPanel`. */
   scrollRef: React.RefObject<HTMLDivElement | null>
+  /** A send is in flight — renders the typing indicator after the last message. */
+  isSending: boolean
   className?: string
 }
 
@@ -29,31 +33,52 @@ interface MessageListProps {
  * Only `sessionMemory.verbatimMessageIds` is rendered. After compaction the overflowed
  * messages must **not** appear verbatim; the summary row stands in for them, and it
  * precedes the oldest surviving message in DOM order.
+ *
+ * A message with `memoryEffects` is followed by one `MemorySavedBadge` per effect. The
+ * badges persist; the toasts announcing the same effects do not.
  */
 export function MessageList({
   sessionId,
   messages,
   sessionMemory,
   scrollRef,
+  isSending,
   className,
 }: MessageListProps) {
   const verbatim = new Set(sessionMemory.verbatimMessageIds)
   const visible = messages.filter((message) => verbatim.has(message.id))
 
-  // Opening a session lands at the newest message.
-  useEffect(() => {
-    const el = scrollRef.current
-    if (el) el.scrollTop = el.scrollHeight
-  }, [sessionId, scrollRef])
+  // Whether the reader was near the bottom *before* the latest commit. Measuring inside
+  // the append effect is too late: compaction removes messages from the top in the same
+  // commit that appends the reply, so the post-commit geometry no longer says where the
+  // reader was. Scroll events keep this current; content changes alone do not.
+  const pinnedToBottom = useRef(true)
 
-  // A later append follows the reader only if they had not scrolled away.
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
-    if (el.scrollHeight - el.scrollTop - el.clientHeight < NEAR_BOTTOM_PX) {
-      el.scrollTop = el.scrollHeight
+    const onScroll = () => {
+      pinnedToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < NEAR_BOTTOM_PX
     }
-  }, [visible.length, scrollRef])
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [scrollRef])
+
+  // Opening a session lands at the newest message.
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    el.scrollTop = el.scrollHeight
+    pinnedToBottom.current = true
+  }, [sessionId, scrollRef])
+
+  // A later append — or the typing indicator appearing — follows the reader only if
+  // they had not scrolled away. Compaction can *shrink* `visible.length`; that is still
+  // a change, so the effect still fires.
+  useEffect(() => {
+    const el = scrollRef.current
+    if (el && pinnedToBottom.current) el.scrollTop = el.scrollHeight
+  }, [visible.length, isSending, scrollRef])
 
   return (
     <div
@@ -66,19 +91,30 @@ export function MessageList({
         <SummarizedContextEntry key={summary.id} summary={summary} />
       ))}
 
-      {visible.map((message) =>
-        // Narrow on the discriminant, so TypeScript proves `analysis` exists.
-        message.kind === 'analysis' ? (
-          <AnalysisCard key={message.id} analysis={message.analysis} />
-        ) : (
-          <MessageBubble
-            key={message.id}
-            role={message.role}
-            content={message.content}
-            createdAt={message.createdAt}
-          />
-        ),
-      )}
+      {visible.map((message) => (
+        <Fragment key={message.id}>
+          {/* Narrow on the discriminant, so TypeScript proves `analysis` exists. */}
+          {message.kind === 'analysis' ? (
+            <AnalysisCard analysis={message.analysis} />
+          ) : (
+            <MessageBubble
+              role={message.role}
+              content={message.content}
+              createdAt={message.createdAt}
+            />
+          )}
+
+          {message.memoryEffects?.length ? (
+            <div className="flex flex-wrap gap-2 self-start">
+              {message.memoryEffects.map((effect) => (
+                <MemorySavedBadge key={effect.factId} factId={effect.factId} label={effect.label} />
+              ))}
+            </div>
+          ) : null}
+        </Fragment>
+      ))}
+
+      {isSending ? <TypingIndicator /> : null}
     </div>
   )
 }

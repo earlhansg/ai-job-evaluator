@@ -18,6 +18,8 @@ interface PanelShellProps {
   /** Optional trailing control in the header row. */
   action?: React.ReactNode
   children: React.ReactNode
+  /** Optional fixed region below the scrolling content. Only Panel 2 uses it (the composer). */
+  footer?: React.ReactNode
   /** Ref to the scrolling region — Panel 2 needs it for scroll anchoring. */
   contentRef?: React.Ref<HTMLDivElement>
   className?: string
@@ -27,7 +29,8 @@ interface PanelShellProps {
 /**
  * Panel chrome: landmark element, a fixed header row, and one scrolling content region.
  *
- * Composition over configuration — the caller passes `children` and an `action` node.
+ * Composition over configuration — the caller passes `children`, an `action` node and
+ * an optional `footer` node (a slot, like `action`, not a mode switch).
  * No `showStats` / `groups` / `collapsible` props; that is how a shell turns into soup.
  *
  * `min-h-0` on both the shell and its content child is load-bearing: a flex or grid
@@ -40,6 +43,7 @@ export function PanelShell({
   title,
   action,
   children,
+  footer,
   contentRef,
   className,
   contentClassName,
@@ -63,6 +67,7 @@ export function PanelShell({
       >
         {children}
       </div>
+      {footer ? <div className="border-border shrink-0 border-t p-4">{footer}</div> : null}
     </Tag>
   )
 }

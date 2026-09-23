@@ -5,8 +5,10 @@ import { MessageSquare } from 'lucide-react'
 import { PanelShell } from '@/components/layout/PanelShell'
 import { PanelError } from '@/components/ui/PanelError'
 import { ChatHeader } from '@/components/chat/ChatHeader'
+import { Composer } from '@/components/chat/Composer'
 import { MessageList } from '@/components/chat/MessageList'
 import { MessageListSkeleton } from '@/components/chat/MessageListSkeleton'
+import { useSendMessage } from '@/hooks/useSendMessage'
 import { useSession } from '@/hooks/useSession'
 import { cn } from '@/lib/utils/cn'
 
@@ -21,9 +23,14 @@ interface ActiveChatPanelProps {
  * The scroll container lives in `PanelShell`, so the ref is created here and handed to
  * both — `MessageList` needs the real scrolling element to decide whether the reader
  * is near the bottom.
+ *
+ * The composer sits in the shell's fixed footer, so it is present in the empty state
+ * too. `key={sessionId}` resets its draft and error on a session switch — without it,
+ * React keeps the same component instance across the param change.
  */
 export function ActiveChatPanel({ sessionId, className }: ActiveChatPanelProps) {
   const { data, error, isLoading, mutate } = useSession(sessionId)
+  const { send, isSending } = useSendMessage(sessionId)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -40,6 +47,7 @@ export function ActiveChatPanel({ sessionId, className }: ActiveChatPanelProps) 
           />
         ) : null
       }
+      footer={data ? <Composer key={sessionId} onSend={send} isSending={isSending} /> : null}
       contentRef={scrollRef}
       className={cn('border-border', className)}
     >
@@ -58,6 +66,7 @@ export function ActiveChatPanel({ sessionId, className }: ActiveChatPanelProps) 
           messages={data.messages}
           sessionMemory={data.sessionMemory}
           scrollRef={scrollRef}
+          isSending={isSending}
         />
       )}
     </PanelShell>

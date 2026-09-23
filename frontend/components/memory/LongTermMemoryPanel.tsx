@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { CircleAlert } from 'lucide-react'
 import { PanelShell } from '@/components/layout/PanelShell'
 import { PanelError } from '@/components/ui/PanelError'
 import { MemoryCategoryGroup } from '@/components/memory/MemoryCategoryGroup'
@@ -39,12 +40,23 @@ interface LongTermMemoryPanelProps {
  * `listFacts` returns Map insertion order — i.e. fixture order — not a sort. The
  * deterministic order is imposed here (fixed category order, then `hitCount` desc,
  * then id) so the panel does not reshuffle after Phase 3's writes.
+ *
+ * Delete focus management lives here: the deleted card unmounts optimistically, so
+ * focus moves to the stats block (next to the count that just dropped). A failed delete
+ * is reported here too, because the card that started it is already gone.
  */
 export function LongTermMemoryPanel({ className }: LongTermMemoryPanelProps) {
   const { data, error, isLoading, mutate } = useMemory()
+  const statsRef = useRef<HTMLDivElement>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const facts = data?.facts
   const grouped = useMemo(() => groupByCategory(facts ?? []), [facts])
+
+  function onFactDeleted() {
+    setDeleteError(null)
+    requestAnimationFrame(() => statsRef.current?.focus())
+  }
 
   return (
     <PanelShell
@@ -62,16 +74,25 @@ export function LongTermMemoryPanel({ className }: LongTermMemoryPanelProps) {
       ) : (
         <div className="flex flex-col gap-6">
           <MemoryStatsHeader
+            ref={statsRef}
             factCount={facts.length}
             categoryCount={CATEGORY_ORDER.filter((c) => grouped[c].length > 0).length}
             updatedAt={data.updatedAt}
           />
+          {deleteError ? (
+            <p role="alert" className="text-caption text-mismatch flex items-center gap-1">
+              <CircleAlert size={16} strokeWidth={1.75} aria-hidden="true" />
+              {deleteError}
+            </p>
+          ) : null}
           <div className="flex flex-col gap-6">
             {CATEGORY_ORDER.filter((category) => grouped[category].length > 0).map((category) => (
               <MemoryCategoryGroup
                 key={category}
                 label={CATEGORY_LABELS[category]}
                 facts={grouped[category]}
+                onFactDeleted={onFactDeleted}
+                onDeleteError={setDeleteError}
               />
             ))}
           </div>

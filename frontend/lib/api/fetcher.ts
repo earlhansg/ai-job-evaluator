@@ -1,5 +1,6 @@
 /**
- * The single throw site for the client data layer.
+ * The single throw site for the client data layer — both the read function SWR calls
+ * (`fetcher`) and the write function the mutations call (`requestJson`).
  *
  * SWR only populates `error` when the fetcher **throws** — `fetch` resolves happily on
  * 4xx/5xx, so a fetcher that returns the error envelope as data leaves `error`
@@ -70,6 +71,26 @@ async function toApiError(res: Response): Promise<ApiError> {
 
 export async function fetcher<T>(url: string): Promise<T> {
   const res = await fetch(url, { headers: { accept: 'application/json' } })
+  if (!res.ok) throw await toApiError(res)
+  return (await res.json()) as T
+}
+
+type MutationMethod = 'POST' | 'PATCH' | 'DELETE'
+
+/** Non-GET requests. Same throw contract as `fetcher`: every non-OK response becomes an `ApiError`. */
+export async function requestJson<T>(
+  url: string,
+  method: MutationMethod,
+  body?: unknown,
+): Promise<T> {
+  const headers: Record<string, string> = { accept: 'application/json' }
+  const init: RequestInit = { method, headers }
+  if (body !== undefined) {
+    headers['content-type'] = 'application/json'
+    init.body = JSON.stringify(body)
+  }
+
+  const res = await fetch(url, init)
   if (!res.ok) throw await toApiError(res)
   return (await res.json()) as T
 }

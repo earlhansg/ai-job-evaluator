@@ -10,6 +10,7 @@
  * `z.record(key, value)` takes both schemas, `z.iso.datetime()` replaces `z.string().datetime()`.
  */
 import { z } from 'zod'
+import { MESSAGE_MAX_CHARS } from '@/lib/limits'
 
 // ---------------------------------------------------------------------------
 // Primitives / enums
@@ -208,7 +209,7 @@ export const SendMessageRequest = z.object({
   content: z
     .string()
     .min(1, { error: 'Message cannot be empty' })
-    .max(8000, { error: 'Message too long' }),
+    .max(MESSAGE_MAX_CHARS, { error: 'Message too long' }),
 })
 export type SendMessageRequest = z.infer<typeof SendMessageRequest>
 

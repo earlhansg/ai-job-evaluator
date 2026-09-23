@@ -1,4 +1,7 @@
-import { CircleCheck, CircleMinus, CircleX } from 'lucide-react'
+'use client'
+
+import { Brain, CircleCheck, CircleMinus, CircleX } from 'lucide-react'
+import { ShowFactButton } from '@/components/analysis/ShowFactButton'
 import { cn } from '@/lib/utils/cn'
 import type { CriterionResult } from '@/lib/schemas'
 
@@ -35,6 +38,11 @@ interface CriterionRowProps {
  *
  * `min-w-0` plus `break-words` is what keeps the 251-character label in `m_pe_002`
  * inside the grid instead of blowing the column out.
+ *
+ * A criterion driven by a stored preference (`sourceFactId`) ends its label line with a
+ * brain icon that shows that fact in Panel 3. Only the icon is interactive: the row
+ * text stays plain, so the status semantics above are unchanged. The icon is 24px, so
+ * an `after:` overlay extends its hit area without moving the layout.
  */
 export function CriterionRow({ criterion, className }: CriterionRowProps) {
   const Icon = STATUS_ICON[criterion.status]
@@ -68,6 +76,19 @@ export function CriterionRow({ criterion, className }: CriterionRowProps) {
             <span className="text-eyebrow text-muted font-mono tracking-[0.08em] uppercase">
               Must have
             </span>
+          ) : null}
+
+          {criterion.sourceFactId ? (
+            <ShowFactButton
+              factId={criterion.sourceFactId}
+              accessibleName={`Show the saved fact behind: ${criterion.label}`}
+              className={cn(
+                'text-muted relative inline-flex size-6 shrink-0 items-center justify-center self-center',
+                "after:absolute after:-inset-2 after:content-['']",
+              )}
+            >
+              <Brain size={16} strokeWidth={1.75} aria-hidden="true" />
+            </ShowFactButton>
           ) : null}
         </span>
 

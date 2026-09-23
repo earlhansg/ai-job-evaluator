@@ -1,4 +1,7 @@
+'use client'
+
 import { Brain } from 'lucide-react'
+import { ShowFactButton } from '@/components/analysis/ShowFactButton'
 import { cn } from '@/lib/utils/cn'
 import type { MemoryCitation } from '@/lib/schemas'
 
@@ -15,8 +18,9 @@ interface MemoryCitationListProps {
  * only showed `f_no_onsite` would prove the citation exists without showing what it
  * said, which is the part that matters.
  *
- * Clicking through to scroll-highlight the matching Panel 3 card is Phase 3 — these
- * are inert today.
+ * Each chip is a `ShowFactButton`: activating it scrolls Panel 3 to the cited fact and
+ * flashes it. The padding sits on the button rather than the `li`, so the whole chip is
+ * the hit target.
  */
 export function MemoryCitationList({ citations, className }: MemoryCitationListProps) {
   if (citations.length === 0) return null
@@ -34,11 +38,17 @@ export function MemoryCitationList({ citations, className }: MemoryCitationListP
             title={citation.factId}
             className={cn(
               'border-border flex max-w-full min-w-0 flex-col gap-1 rounded-md border',
-              'bg-surface-2 px-2 py-1',
+              'bg-surface-2',
             )}
           >
-            <span className="text-caption text-text font-medium">{citation.label}</span>
-            <span className="text-caption text-muted break-words">{citation.value}</span>
+            <ShowFactButton
+              factId={citation.factId}
+              accessibleName={`Show saved fact: ${citation.label}`}
+              className="flex max-w-full min-w-0 flex-col items-start gap-1 px-2 py-1 text-start"
+            >
+              <span className="text-caption text-text font-medium">{citation.label}</span>
+              <span className="text-caption text-muted break-words">{citation.value}</span>
+            </ShowFactButton>
           </li>
         ))}
       </ul>

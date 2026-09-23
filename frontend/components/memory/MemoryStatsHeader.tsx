@@ -8,18 +8,28 @@ interface MemoryStatsHeaderProps {
   categoryCount: number
   /** Most recent `updatedAt` across all facts. */
   updatedAt: string
+  /** Focus target after a fact is deleted (React 19: `ref` is a plain prop). */
+  ref?: React.Ref<HTMLDivElement>
   className?: string
 }
 
-/** The panel's "what does it know about me" summary. AB targets `memory-stats`. */
+/**
+ * The panel's "what does it know about me" summary. AB targets `memory-stats`.
+ *
+ * `tabIndex={-1}` makes it programmatically focusable: after a delete the card that
+ * held focus unmounts, and focus lands here, next to the count that just dropped.
+ */
 export function MemoryStatsHeader({
   factCount,
   categoryCount,
   updatedAt,
+  ref,
   className,
 }: MemoryStatsHeaderProps) {
   return (
     <div
+      ref={ref}
+      tabIndex={-1}
       data-testid="memory-stats"
       className={cn(
         'border-border bg-surface-1 flex flex-col gap-2 rounded-xl border p-4',

@@ -11,6 +11,7 @@
 import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import { matchScriptedReply, JOB_DESCRIPTION_TOKEN_ESTIMATE } from './scripted-replies.ts'
+import { COMPOSER_SUGGESTIONS } from '../composer-suggestions.ts'
 
 /** A pasted posting for an onsite role — the exact case the ordering bug breaks. */
 const ONSITE_JOB_DESCRIPTION = [
@@ -102,5 +103,36 @@ describe('matchScriptedReply', () => {
         ['f_stack_ts', 'updated'],
       ],
     )
+  })
+})
+
+/**
+ * Guards the composer's suggestion chips. A chip that promises a job-description
+ * analysis but misses the ≥400-character gate silently lands on the onsite trigger —
+ * which returns a 96-token text reply and never overflows the demo session.
+ */
+describe('composer suggestions', () => {
+  function suggestion(id: string) {
+    const found = COMPOSER_SUGGESTIONS.find((s) => s.id === id)
+    assert.ok(found, `no suggestion ${id}`)
+    return found
+  }
+
+  test('the sample job description lands on the job-description trigger', () => {
+    const { text } = suggestion('sample-jd')
+    assert.ok(text.length >= 400, `precondition: ${text.length} chars clears the length gate`)
+    assert.equal(matchScriptedReply(text).trigger, 'job-description')
+  })
+
+  test('the sample job description is the posting the demo ledger was tuned against', () => {
+    assert.equal(suggestion('sample-jd').text, ONSITE_JOB_DESCRIPTION)
+  })
+
+  test('the onsite chip lands on the onsite trigger', () => {
+    assert.equal(matchScriptedReply(suggestion('onsite').text).trigger, 'onsite')
+  })
+
+  test('the salary-floor chip lands on the compensation trigger', () => {
+    assert.equal(matchScriptedReply(suggestion('comp-floor').text).trigger, 'compensation')
   })
 })

@@ -15,8 +15,12 @@
  *    session click.
  *  - `shouldRetryOnError: false` — the default retries with exponential backoff, so a
  *    deliberate 404 would take seconds to surface as an error state.
+ *
+ * `ToastProvider` is app-wide rather than workspace-scoped because a toast may outlive
+ * a route change.
  */
 import { SWRConfig } from 'swr'
+import { ToastProvider } from '@/components/ui/ToastProvider'
 import { fetcher } from '@/lib/api/fetcher'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -29,7 +33,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         shouldRetryOnError: false,
       }}
     >
-      {children}
+      <ToastProvider>{children}</ToastProvider>
     </SWRConfig>
   )
 }

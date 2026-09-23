@@ -20,6 +20,7 @@ import sessionsFixture from '@/lib/mock/fixtures/sessions.json'
 import messagesFixture from '@/lib/mock/fixtures/messages.json'
 import factsFixture from '@/lib/mock/fixtures/facts.json'
 import summariesFixture from '@/lib/mock/fixtures/summaries.json'
+import { rebaseOffset, shiftTimestamps } from '@/lib/mock/rebase-fixture-time'
 
 // ---------------------------------------------------------------------------
 // Redis key strings — the whole point of this file
@@ -54,7 +55,7 @@ type Tables = {
 // ---------------------------------------------------------------------------
 
 /**
- * Deep-clones every fixture before it enters a table.
+ * Deep-copies every fixture before it enters a table.
  *
  * Seeding by reference would let the first mutation write *through* into the imported
  * JSON module object, which is cached for the process lifetime — so `POST /api/dev/reset`
@@ -63,21 +64,34 @@ type Tables = {
  *
  * Fixtures are validated through their zod schemas here and fail loudly. Hand-authored
  * `tokenEstimate` values are exactly the kind of thing that rots silently.
+ *
+ * Timestamps are rebased relative to now on the way in (`shiftTimestamps` is also the
+ * deep clone). Relative ages, ordering and every hand-tuned token value are preserved,
+ * and `POST /api/dev/reset` re-anchors to the current time.
  */
 function seed(): Tables {
+  const offset = rebaseOffset(Date.now())
+
   const sessions = parseFixture(
     'sessions.json',
     ChatSession.array(),
-    structuredClone(sessionsFixture),
+    shiftTimestamps(sessionsFixture, offset),
   )
   const messagesBySession = parseFixture(
     'messages.json',
     ChatMessage.array(),
-    structuredClone(messagesFixture),
+    shiftTimestamps(messagesFixture, offset),
     { perKey: true },
   )
-  const facts = parseFixture('facts.json', MemoryFact.array(), structuredClone(factsFixture))
-  const seededSummaries = structuredClone(summariesFixture.seeded) as Record<string, unknown[]>
+  const facts = parseFixture(
+    'facts.json',
+    MemoryFact.array(),
+    shiftTimestamps(factsFixture, offset),
+  )
+  const seededSummaries = shiftTimestamps(summariesFixture.seeded, offset) as Record<
+    string,
+    unknown[]
+  >
 
   const tables: Tables = {
     sessionIndex: new Map(),
